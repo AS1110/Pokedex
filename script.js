@@ -1,14 +1,3 @@
-let currentPokemon;
-let amountLoadedPokemon = 0;
-
-
-
-async function init() {
-    await includeHTML();
-    loadMorePokemon();
-}
-
-
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
     for (let i = 0; i < includeElements.length; i++) {
@@ -24,14 +13,36 @@ async function includeHTML() {
 }
 
 
+
+let currentPokemon;
+let amountLoadedPokemon = 0;
+
+let pokemonJson = [{'empty': 'empty'}];
+
+async function loadPokemonJson(amountNewLoad) {
+    for (let i = amountLoadedPokemon + 1; i < amountNewLoad + 1; i++) {
+        let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+        let response = await fetch(url);
+        let pokemonArray = await response.json();
+        pokemonJson.push(pokemonArray);
+    }
+    loadPokemon(amountNewLoad);
+    amountLoadedPokemon = amountNewLoad;
+}
+
+
+
+async function init() {
+    await includeHTML();
+    await loadMorePokemon();
+}
+
+
 async function loadPokemon(amountNewLoad) {
     for (let currentId = amountLoadedPokemon + 1; currentId < amountNewLoad + 1; currentId++) {
-        let url = `https://pokeapi.co/api/v2/pokemon/${currentId}`;
-        let response = await fetch(url);
-        currentPokemon = await response.json();
+        currentPokemon = pokemonJson[currentId];
         renderPokemonContainers(currentId);
     };
-    amountLoadedPokemon = amountNewLoad;
 }
 
 
@@ -43,11 +54,13 @@ function renderPokemonContainers(currentId) {
 
 
 function renderPokemonContainer(currentId) {
+    let name = currentPokemon['name'];
+    let nameUpperCase = name.charAt(0).toUpperCase() + name.slice(1);
     return `
     <div id="pokeContainer${currentId}" class="pokeContainer">
         <div class="pokeContainerHead">
-            <h2>${currentPokemon['name']}</h2>
-            <h2>${currentPokemon['id']}</h2>
+            <h2>${nameUpperCase}</h2>
+            <h2>#${currentPokemon['id']}</h2>
         </div>
         <div class="pokeContainerMain">
             <div id="types${currentId}"></div>
@@ -82,5 +95,5 @@ function renderContainerBgColorByType(currentId) {
 
 function loadMorePokemon() {
     let amountNewLoad = amountLoadedPokemon + 20;
-    loadPokemon(amountNewLoad);
+    loadPokemonJson(amountNewLoad);
 }
