@@ -186,3 +186,43 @@ main {
 .hover {
     cursor: pointer;
 }
+
+.pokeContainerSelected {
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.imgPokemonSelected {
+    z-index: 3;
+}
+
+.imgPokemonSelected img {
+    height: 200px;
+    max-width: 300px;
+    margin-left: 190px;
+    margin-top: 30px;
+}
+
+.leftRight {
+    position: absolute;
+    z-index: 4;
+    top: 150px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.leftRight img {
+    height: 110px;
+    width: 44px;
+    opacity: 0.5;
+    transition: 150ms ease-in-out;
+}
+
+.leftRight img:hover {
+    opacity: unset;
+    transition: 150ms ease-in-out;
+}

@@ -17,8 +17,8 @@ async function includeHTML() {
 let currentPokemon;
 let amountLoadedPokemon = 0;
 
-let pokemonJson = [{'empty': 'empty'}];
-let pokemonJson2 = [{'empty': 'empty'}];
+let pokemonJson = [{ 'empty': 'empty' }];
+let pokemonJson2 = [{ 'empty': 'empty' }];
 
 
 async function loadPokemonJson(amountNewLoad) {
@@ -41,7 +41,7 @@ async function loadPokemonJson(amountNewLoad) {
 
 async function init() {
     await includeHTML();
-    await loadMorePokemon();
+    await loadMorePokemon(20);
 }
 
 
@@ -71,8 +71,8 @@ function renderTypeContainer(idName, currentPokemon) {
 
 
 
-function loadMorePokemon() {
-    let amountNewLoad = amountLoadedPokemon + 20;
+function loadMorePokemon(i) {
+    let amountNewLoad = amountLoadedPokemon + i;
     loadPokemonJson(amountNewLoad);
 }
 
@@ -104,6 +104,9 @@ function renderPokemonContainer(currentId) {
 
 
 function openSelected(i) {
+    if (i > pokemonJson.length - 2) {
+        loadMorePokemon(3);
+    }
     let currentPokemonSelected = pokemonJson[i];
     let name = currentPokemonSelected['name'];
     let nameUpperCase = name.charAt(0).toUpperCase() + name.slice(1);
@@ -120,7 +123,16 @@ function openSelected(i) {
         <div><h2>#${currentPokemonSelected['id']}</h2></div>
         <div><img class="hover" src="img/close.png" onclick="closeSelcted()"></div>
     </div>
-    <div id="typesSelected${i}"></div>
+    <div class="pokeContainerSelected">
+        <div id="typesSelected${i}"></div>
+        <div class="imgPokemonSelected">
+        <img src="${currentPokemonSelected['sprites']['other']['dream_world']['front_default']}">
+        </div>
+    </div>
+    <div class="leftRight">
+        <img src="img/left.png" onclick="openLast(${i})">
+        <img src="img/right.png" onclick="openNext(${i})">
+    </div>
     `;
 
 
@@ -136,5 +148,20 @@ function renderContainerBgColorByType(i, j, idName, left, right) {
         let x = j['types'][`0`]['type']['name'];
         let y = j['types'][`1`]['type']['name'];
         document.getElementById(`${idName}`).style.background = `linear-gradient(115deg, ${typesBgColors[0][`${y}`]} ${left}%, ${typesBgColors[0][`${x}`]} ${right}%)`;
+    }
+}
+
+
+function openLast(i) {
+    i--;
+    if (i > 0) {
+        openSelected(i);
+    }
+}
+
+function openNext(i) {
+    i++;
+    if (i < 906) {
+        openSelected(i);
     }
 }
