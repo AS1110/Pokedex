@@ -36,14 +36,28 @@ body {
     bottom: -10px;
     width: 160px;
     height: 160px;
-    animation: rotation 14s infinite linear;
-    animation-play-state: paused;
+    transform: rotate(25deg);
+}
+
+.pokeballBottom {
+    opacity: 0.65;
+}
+
+.pokeballTop {
+    z-index: 2;
+    opacity: 0;
+    transition: 150ms ease-in-out;
+}
+
+.pokeContainer:hover .pokeballTop {
+    opacity: 100%;
+    transition: 150ms ease-in-out;
 }
 
 .imgPokeball img {
     width: 160px;
-    z-index: 1;
-    opacity: 0.5;
+    z-index: 1;    
+    position: absolute;
 }
 
 .imgPokemon {
@@ -77,20 +91,6 @@ body {
 .pokeContainer:hover .imgPokemon {
     scale: 1.15;
     transition: 150ms ease-in-out;
-}
-
-.pokeContainer:hover .imgPokeball {
-    animation-play-state: running;
-}
-
-@keyframes rotation {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
 }
 
 h2,
@@ -133,6 +133,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 16px;
 }
 
 .loadMoreContainer {
@@ -170,7 +171,8 @@ main {
 
 .selectedContainerBottom {
     background-color: white;
-    height: 65%;
+    color: black;
+    height: 60%;
     bottom: 0;
     width: 100%;
     position: absolute;
@@ -212,7 +214,6 @@ main {
     right: 16px;
     display: flex;
     justify-content: space-between;
-    cursor: pointer;
 }
 
 .leftRight img {
@@ -220,9 +221,104 @@ main {
     width: 44px;
     opacity: 0.5;
     transition: 150ms ease-in-out;
+    cursor: pointer;
 }
 
 .leftRight img:hover {
     opacity: unset;
     transition: 150ms ease-in-out;
+}
+
+.selectedContainerBottomHead ul {
+    margin: 16px;
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.selectedContainerBottomHead li {
+    padding: 0 24px;
+    cursor: pointer;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #A8A7A6;
+    color: #A8A7A6;
+    transition: 150ms ease-in-out;
+}
+
+.selectedContainerBottomHead li:hover {
+    border-bottom: 3px solid black;
+    color: black;  
+    transition: 150ms ease-in-out; 
+}
+
+.colorBlack {
+    border-bottom: 3px solid black !important;
+    color: black !important;
+}
+
+.selectedContainerBottomDown {
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 340px;
+}
+
+.selectedContainerBottomDown ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.selectedContainerBottomDown li {
+    margin-bottom: 8px;
+    display: flex;
+}
+
+.h4Left {
+    width: 150px;
+    color: #A8A7A6;
+}
+
+.h4Right {
+    margin-right: 12px;
+    display: flex;
+}
+
+.h4Moves {
+    margin-bottom: 8px;
+    margin-right: 12px;
+    width: 170px;
+}
+
+.movesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.movesContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.stopScroll {
+    overflow-y: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 2px 10px 0px rgb(0 0 0 / 10%);
+    height: 10vh;
+    padding: 0 64px;
+}
+
+.navbar {
+    display: flex;
+}
+
+.navbar h3 {
+    margin: 0 8px;
 }
