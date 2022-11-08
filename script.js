@@ -22,6 +22,14 @@ let pokemonJson2 = [{ 'empty': 'empty' }];
 let selectedState = ["about", "stats", "moves"];
 let selectedCurrent = 0;
 
+let allPokemonJson;
+
+async function loadAllJson(){
+    let url = `https://pokeapi.co/api/v2/pokemon?limit=905&offset=0`;
+    let response = await fetch(url);
+    allPokemonJson = await response.json();
+}
+
 
 async function loadPokemonJson(amountNewLoad) {
     for (let i = amountLoadedPokemon + 1; i < amountNewLoad + 1; i++) {
@@ -44,6 +52,7 @@ async function loadPokemonJson(amountNewLoad) {
 async function init() {
     await includeHTML();
     await loadMorePokemon(20);
+    loadAllJson();
 }
 
 
@@ -96,7 +105,7 @@ function renderPokemonContainer(currentId) {
         <div class="pokeContainerMain">
             <div id="types${currentId}"></div>
             <div class="imgPokemon">
-                <img src="${currentPokemon['sprites']['other']['dream_world']['front_default']}">
+                <img src="${currentPokemon['sprites']['other']['official-artwork']['front_default']}">
             </div>
             <div class="imgPokeball">
                 <img class="pokeballBottom" src="img/iconPokeball.png">
@@ -135,7 +144,7 @@ function openSelected(i) {
     <div class="pokeContainerSelected">
         <div id="typesSelected${i}"></div>
         <div class="imgPokemonSelected">
-        <img src="${currentPokemonSelected['sprites']['other']['dream_world']['front_default']}">
+        <img src="${currentPokemonSelected['sprites']['other']['official-artwork']['front_default']}">
         </div>
     </div>
     <div class="leftRight">
